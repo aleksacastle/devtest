@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_132124) do
+ActiveRecord::Schema.define(version: 2018_07_20_224937) do
 
   create_table "countries", force: :cascade do |t|
     t.string "code", null: false
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 2018_05_21_132124) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_panel_providers_on_code", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "password"
+    t.string "auth_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
   end
 
 end
