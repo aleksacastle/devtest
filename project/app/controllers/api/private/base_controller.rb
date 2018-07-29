@@ -1,4 +1,4 @@
-module Api::V1
+module Api::Private
   class BaseController < Api::BaseController
     include ActionController::HttpAuthentication::Token::ControllerMethods
 
