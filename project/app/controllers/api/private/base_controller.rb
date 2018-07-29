@@ -12,7 +12,7 @@ module Api::Private
 
     def authenticate_token
       authenticate_with_http_token do |token, options|
-        User.find_by(token: auth_token)
+        User.find_by(auth_token: token)
       end
     end
 
