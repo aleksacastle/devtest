@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_20_224937) do
+ActiveRecord::Schema.define(version: 2018_07_29_092948) do
 
   create_table "countries", force: :cascade do |t|
     t.string "code", null: false
@@ -21,13 +21,36 @@ ActiveRecord::Schema.define(version: 2018_07_20_224937) do
     t.index ["panel_provider_id"], name: "index_countries_on_panel_provider_id"
   end
 
+  create_table "location_groups", force: :cascade do |t|
+    t.string "name"
+    t.integer "country_id"
+    t.integer "panel_provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_location_groups_on_country_id"
+    t.index ["panel_provider_id"], name: "index_location_groups_on_panel_provider_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
     t.string "external_id", null: false
     t.string "secret_code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "country_id"
+    t.integer "panel_provider_id"
+    t.index ["country_id"], name: "index_locations_on_country_id"
     t.index ["external_id"], name: "index_locations_on_external_id", unique: true
+    t.index ["panel_provider_id"], name: "index_locations_on_panel_provider_id"
+  end
+
+  create_table "panel_prices", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.integer "panel_provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["panel_provider_id"], name: "index_panel_prices_on_panel_provider_id"
   end
 
   create_table "panel_providers", force: :cascade do |t|
@@ -35,6 +58,18 @@ ActiveRecord::Schema.define(version: 2018_07_20_224937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_panel_providers_on_code", unique: true
+  end
+
+  create_table "target_groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "external_id", null: false
+    t.string "secret_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ancestry"
+    t.integer "panel_provider_id"
+    t.index ["ancestry"], name: "index_target_groups_on_ancestry"
+    t.index ["panel_provider_id"], name: "index_target_groups_on_panel_provider_id"
   end
 
   create_table "users", force: :cascade do |t|
